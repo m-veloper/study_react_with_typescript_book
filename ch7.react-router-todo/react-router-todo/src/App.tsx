@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from '@emotion/styled';
+import { Routes, Route } from 'react-router-dom';
+import { DataView } from 'pages/DataView';
+import { ToDoInput } from 'pages/ToDoInput';
+import { ToDoListContextProvider } from 'contexts/ToDoList';
+import { Header } from 'components/Header';
+
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee;
+`;
+
+const NotFound = styled.div`
+  text-align: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <ToDoListContextProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<DataView />} />
+          <Route path="/add" element={<ToDoInput />} />
+          <Route
+            path="*"
+            element={
+              <NotFound>
+                404
+                <br />
+                NOT FOUND
+              </NotFound>
+            }
+          />
+        </Routes>
+      </ToDoListContextProvider>
+    </Container>
   );
 }
 
